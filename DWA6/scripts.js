@@ -42,6 +42,25 @@ const updateShowMoreButton = () => {
 };
 
 /**
+ * Checks if a given book matches the specified criteria.
+ *
+ * @param {object} book - The book object to be matched.
+ * @param {object} filters - The criteria filters to match against.
+ * @param {string} filters.genre - The genre to match. Set to 'any' to match any genre.
+ * @param {string} filters.title - The title to match. Case-insensitive. Set to an empty string to ignore title matching.
+ * @param {string} filters.author - The author to match. Set to 'any' to match any author.
+ * @returns {boolean} Returns true if the book matches all specified criteria, otherwise false.
+ */
+const isBookMatch = (book, { genre, title, author }) => {
+  const genreMatch = book.genres.includes(genre) || genre === 'any';
+  if (!genreMatch) return false;
+  const titleMatch = title.trim() === '' || book.title.toLowerCase().includes(title.toLowerCase());
+  if (!titleMatch) return false;
+  const authorMatch = author === 'any' || book.author === author;
+  if (!authorMatch) return false;
+  return true;
+};
+/**
  * Filters an array of books based on user-provided filter criteria.
  *
  * @param {Event} event - The event object from form submission.
@@ -52,12 +71,7 @@ const getFilteredBooks = event => {
   const formData = new FormData(event.target);
   const filters = Object.fromEntries(formData);
 
-  const result = books.filter(book => {
-    const genreMatch = book.genres.includes(filters.genre) || filters.genre === 'any';
-    const titleMatch = filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase());
-    const authorMatch = filters.author === 'any' || book.author === filters.author;
-    return genreMatch && titleMatch && authorMatch;
-  });
+  const result = books.filter(book => isBookMatch(book, filters));
   return result;
 };
 
