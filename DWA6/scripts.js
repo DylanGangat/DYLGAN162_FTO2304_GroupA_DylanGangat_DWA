@@ -82,31 +82,22 @@ const displayFilteredBooks = result => {
  * @param {Event} event - The event object representing the form submission event.
  */
 const filterAndDisplayBooks = event => {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const filters = Object.fromEntries(formData);
-  const result = [];
+  const getFilteredBooks = event => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const filters = Object.fromEntries(formData);
 
-  for (const book of books) {
-    let genreMatch = filters.genre === 'any';
-
-    for (const singleGenre of book.genres) {
-      if (genreMatch) break;
-      if (singleGenre === filters.genre) {
-        genreMatch = true;
-      }
-    }
-
-    if (
-      (filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase())) &&
-      (filters.author === 'any' || book.author === filters.author) &&
-      genreMatch
-    ) {
-      result.push(book);
-    }
-  }
-
+    const result = books.filter(book => {
+      const genreMatch = book.genres.includes(filters.genre) || filters.genre === 'any';
+      const titleMatch = filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase());
+      const authorMatch = filters.author === 'any' || book.author === filters.author;
+      return genreMatch && titleMatch && authorMatch;
+    });
+    return result;
+  };
+  const result = getFilteredBooks(event);
   displayFilteredBooks(result);
+  html.search.form.reset();
 };
 
 html.search.cancel.addEventListener('click', () => {
