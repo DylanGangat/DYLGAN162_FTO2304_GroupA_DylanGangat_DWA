@@ -1,0 +1,26 @@
+{
+  "name": "dylgan162_fto2304_groupa_dylangangat_dwa",
+  "version": "1.0.0",
+  "description": "Welcome to my repository for the DWA module at Codespace Academy! In this module, I will be diving into the world of structuring JavaScript code for clean, maintainable, and scalable development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DylanGangat/DYLGAN162_FTO2304_GroupA_DylanGangat_DWA.git"
+  },
+  "author": "dylangangat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DylanGangat/DYLGAN162_FTO2304_GroupA_DylanGangat_DWA/issues"
+  },
+  "homepage": "https://github.com/DylanGangat/DYLGAN162_FTO2304_GroupA_DylanGangat_DWA#readme",
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "prettier": "3.0.2"
+  }
+}

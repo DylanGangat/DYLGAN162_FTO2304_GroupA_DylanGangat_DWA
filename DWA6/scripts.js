@@ -1,5 +1,7 @@
+// /* eslint-disable */
 import { books, BOOKS_PER_PAGE } from './data.js';
 import { html, createBookElement, updateColorThemeMode, getClickedBookAndDisplayModal } from './view.js';
+/* eslint-enable */
 
 let page = 1;
 let matches = books;
@@ -9,11 +11,7 @@ let matches = books;
  */
 const appendNextPageOfBooks = () => {
   const fragment = document.createDocumentFragment();
-
-  for (const book of matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE)) {
-    fragment.appendChild(createBookElement(book));
-  }
-
+  matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE).forEach(book => fragment.appendChild(createBookElement(book)));
   html.list.items.appendChild(fragment);
   page += 1;
 };
@@ -23,11 +21,7 @@ const appendNextPageOfBooks = () => {
  */
 const createIntialBooksDisplay = () => {
   const starting = document.createDocumentFragment();
-
-  for (const book of matches.slice(0, BOOKS_PER_PAGE)) {
-    starting.appendChild(createBookElement(book));
-  }
-
+  matches.slice(0, BOOKS_PER_PAGE).forEach(book => starting.appendChild(createBookElement(book)));
   html.list.items.appendChild(starting);
 };
 
@@ -48,6 +42,26 @@ const updateShowMoreButton = () => {
 };
 
 /**
+ * Filters an array of books based on user-provided filter criteria.
+ *
+ * @param {Event} event - The event object from form submission.
+ * @returns {Array} - An array of books that match the specified filters.
+ */
+const getFilteredBooks = event => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const filters = Object.fromEntries(formData);
+
+  const result = books.filter(book => {
+    const genreMatch = book.genres.includes(filters.genre) || filters.genre === 'any';
+    const titleMatch = filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase());
+    const authorMatch = filters.author === 'any' || book.author === filters.author;
+    return genreMatch && titleMatch && authorMatch;
+  });
+  return result;
+};
+
+/**
  * Displays the filtered books on the page.
  * @param {Array} result - An array of book objects representing the filtered books.
  */
@@ -64,10 +78,7 @@ const displayFilteredBooks = result => {
   html.list.items.innerHTML = '';
   const newItems = document.createDocumentFragment();
 
-  for (const book of result.slice(0, BOOKS_PER_PAGE)) {
-    newItems.appendChild(createBookElement(book));
-  }
-
+  result.slice(0, BOOKS_PER_PAGE).forEach(book => newItems.appendChild(createBookElement(book)));
   html.list.items.appendChild(newItems);
 
   updateShowMoreButton();
@@ -82,22 +93,15 @@ const displayFilteredBooks = result => {
  * @param {Event} event - The event object representing the form submission event.
  */
 const filterAndDisplayBooks = event => {
-  const getFilteredBooks = event => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const filters = Object.fromEntries(formData);
-
-    const result = books.filter(book => {
-      const genreMatch = book.genres.includes(filters.genre) || filters.genre === 'any';
-      const titleMatch = filters.title.trim() === '' || book.title.toLowerCase().includes(filters.title.toLowerCase());
-      const authorMatch = filters.author === 'any' || book.author === filters.author;
-      return genreMatch && titleMatch && authorMatch;
-    });
-    return result;
-  };
-  const result = getFilteredBooks(event);
-  displayFilteredBooks(result);
-  html.search.form.reset();
+  try {
+    const result = getFilteredBooks(event);
+    if (!result) throw new Error('There is something wrong with your result array');
+    displayFilteredBooks(result);
+    html.search.form.reset();
+  } catch (e) {
+    /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+    console.error(e);
+  }
 };
 
 html.search.cancel.addEventListener('click', () => {
