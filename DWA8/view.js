@@ -135,72 +135,22 @@ export const createBookElement = ({ author, id, image, title }) => {
   return element;
 };
 
-// /**
-//  * Updates the book modal with information of the active book.
-//  *
-//  * @param {Object|null} active - The active book data or null if no active book.
-//  * @param {string} active.image - The image URL of the active book.
-//  * @param {string} active.title - The title of the active book.
-//  * @param {number} active.author - The index of the author of the active book.
-//  * @param {string} active.published - The publication date of the active book.
-//  * @param {string} active.description - The description of the active book.
-//  */
-// export const updateBookModal = active => {
-//   if (active) {
-//     html.list.overlay.open = true;
-//     html.list.blur.src = active.image;
-//     html.list.image.src = active.image;
-//     html.list.title.innerText = active.title;
-//     html.list.subtitle.innerText = `${authors[active.author]} (${new Date(active.published).getFullYear()})`;
-//     html.list.description.innerText = active.description;
-//   }
-// };
+const getBookClicked = event => {
+  const target = event.target.closest('.preview');
+  const targetPreviewId = target.dataset.preview;
+  const { image, title, author, published, description } = books.find(book => book.id === targetPreviewId);
 
-// /**
-//  * Finds the clicked book element in the event's path and displays its information in a modal.
-//  *
-//  * @param {Event} event - The event object representing the click event.
-//  */
-// export const getClickedBookAndDisplayModal = event => {
-//   const pathArray = Array.from(event.path || event.composedPath());
-//   let active = null;
-
-//   for (const node of pathArray) {
-//     if (active) break;
-
-//     if (node?.dataset?.preview) {
-//       let result = null;
-
-//       for (const singleBook of books) {
-//         if (result) break;
-//         if (singleBook.id === node?.dataset?.preview) result = singleBook;
-//       }
-
-//       active = result;
-//     }
-//   }
-
-//   updateBookModal(active);
-// };
+  return {
+    image,
+    title,
+    author,
+    published,
+    description,
+  };
+};
 
 export const getClickedBookAndDisplayModal = event => {
-  const pathArray = Array.from(event.path || event.composedPath());
-  let active = null;
-  /* eslint-disable */
-  for (const node of pathArray) {
-    if (active) break;
-
-    if (node?.dataset?.preview) {
-      let result = null;
-      for (const singleBook of books) {
-        if (result) break;
-        if (singleBook.id === node?.dataset?.preview) result = singleBook;
-      }
-
-      active = result;
-    }
-  }
-
+  const active = getBookClicked(event);
   /* eslint-enable */
 
   /**
