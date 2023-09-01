@@ -151,7 +151,6 @@ const getBookClicked = event => {
 
 export const getClickedBookAndDisplayModal = event => {
   const active = getBookClicked(event);
-  /* eslint-enable */
 
   /**
    * Updates the book modal with information of the active book.
