@@ -223,7 +223,7 @@ export default class PreviewComponent extends HTMLElement {
   }
 
   // Toggle the overlay's open attribute when the close button is clicked
-  toggleOverlay() {
+  toggleOverlay = () => {
     const previewOverlay = this.shadowRoot.querySelector('[data-list-active]');
     previewOverlay.removeAttribute('open');
   }
