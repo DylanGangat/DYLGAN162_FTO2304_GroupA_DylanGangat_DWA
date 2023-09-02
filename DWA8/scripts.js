@@ -1,10 +1,10 @@
-// /* eslint-disable */
 import { books, BOOKS_PER_PAGE } from './data.js';
-import { html, createBookElement, updateColorThemeMode, getClickedBookAndDisplayModal } from './view.js';
-/* eslint-enable */
+import { html, createBookElement, updateColorThemeMode } from './view.js';
+import getClickedBookAndDisplayModal from './modules/bookPreview.js';
 
 let page = 1;
 let matches = books;
+let createModal;
 
 /**
  * Appends the next page of books to the existing book list.
@@ -135,10 +135,6 @@ html.settings.button.addEventListener('click', () => {
   html.settings.overlay.open = true;
 });
 
-html.list.close.addEventListener('click', () => {
-  html.list.overlay.open = false;
-});
-
 html.settings.form.addEventListener('submit', event => {
   updateColorThemeMode(event);
 });
@@ -152,9 +148,15 @@ html.list.button.addEventListener('click', () => {
 });
 
 html.list.items.addEventListener('click', event => {
-  const createModal = getClickedBookAndDisplayModal(event);
-  createModal.updateBookModal()
+  createModal = getClickedBookAndDisplayModal(event);
+  createModal.updateBookModal();
   createModal.open();
+});
+
+html.list.close.addEventListener('click', () => {
+  if (createModal) {
+    createModal.close();
+  }
 });
 
 createIntialBooksDisplay();

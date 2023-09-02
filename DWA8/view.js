@@ -1,4 +1,4 @@
-import { genres, authors, books } from './data.js';
+import { genres, authors } from './data.js';
 
 export const html = {
   list: {
@@ -133,57 +133,6 @@ export const createBookElement = ({ author, id, image, title }) => {
         </div>
     `;
   return element;
-};
-
-const getBookClicked = event => {
-  const target = event.target.closest('.preview');
-  const targetPreviewId = target.dataset.preview;
-  const { image, title, author, published, description } = books.find(book => book.id === targetPreviewId);
-
-  return {
-    image,
-    title,
-    author,
-    published,
-    description,
-  };
-};
-
-export const getClickedBookAndDisplayModal = event => {
-  const active = getBookClicked(event);
-
-  /**
-   * Updates the book modal with information of the active book.
-   *
-   * @param {Object|null} active - The active book data or null if no active book.
-   * @param {string} active.image - The image URL of the active book.
-   * @param {string} active.title - The title of the active book.
-   * @param {number} active.author - The index of the author of the active book.
-   * @param {string} active.published - The publication date of the active book.
-   * @param {string} active.description - The description of the active book.
-   */
-  const updateBookModal = () => {
-    if (active) {
-      html.list.overlay.open = true;
-      html.list.blur.src = active.image;
-      html.list.image.src = active.image;
-      html.list.title.innerText = active.title;
-      html.list.subtitle.innerText = `${authors[active.author]} (${new Date(active.published).getFullYear()})`;
-      html.list.description.innerText = active.description;
-    }
-  };
-
-  // updateBookModal(active);
-
-  const openModal = () => {
-    html.list.overlay.open = true;
-  };
-
-  return {
-    activeBook: active,
-    updateBookModal,
-    open: openModal,
-  };
 };
 
 setPreferredColorThemeMode();
