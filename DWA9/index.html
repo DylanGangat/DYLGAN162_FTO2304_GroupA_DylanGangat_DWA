@@ -25,7 +25,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet" />
 
         <script src="./scripts.js" type="module" defer></script>
-        <!-- <script src="./control.js" type="module" defer></script> -->
     </head>
 
     <body>
@@ -79,20 +78,10 @@
             <button class="list__button" data-list-button></button>
         </main>
 
+        <div id="custom-element-container">
+        </div>
 
-        <dialog class="overlay" data-list-active>
-            <div class="overlay__preview"><img class="overlay__blur" data-list-blur src="" /><img class="overlay__image"
-                    data-list-image src="" /></div>
-            <div class="overlay__content">
-                <h3 class="overlay__title" data-list-title></h3>
-                <div class="overlay__data" data-list-subtitle></div>
-                <p class="overlay__data overlay__data_secondary" data-list-description></p>
-            </div>
-
-            <div class="overlay__row">
-                <button class="overlay__button overlay__button_primary" data-list-close>Close</button>
-            </div>
-        </dialog>
+        <!-- <preview-component></preview-component> -->
 
         <dialog class="overlay" data-search-overlay>
             <div class="overlay__content">

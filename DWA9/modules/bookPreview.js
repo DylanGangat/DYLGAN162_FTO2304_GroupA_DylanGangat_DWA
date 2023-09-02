@@ -1,6 +1,6 @@
 import { html } from '../view.js';
 import { authors, books } from '../data.js';
-import { previewComponent } from '../components/previewComponent.js';
+import PreviewComponent from '../components/previewComponent.js';
 
 const getBookClicked = event => {
   const target = event.target.closest('.preview');
@@ -44,26 +44,29 @@ const updateBookModal = active => {
 
 const getClickedBookAndDisplayModal = event => {
   const active = getBookClicked(event);
- const { image, title, author, published, description } = active;
-  // updateBookModal(active);
-  const template = new previewComponent(image, title, author, published, description)
-console.log("hello: ", template.outerHTML)
+  const { image, title, author, published, description } = active;
+
+  // Remove any previous custom elements
+  const container = document.getElementById('custom-element-container');
+  const existingElement = container.querySelector('preview-component'); // Adjust the selector as needed for your custom element
+
+  if (existingElement) {
+    container.removeChild(existingElement);
+  }
+
+  const template = new PreviewComponent(image, title, author, published, description);
+
   // Attach the created component to the DOM
-  document.body.appendChild(template);
+  container.appendChild(template);
 
   const openModal = () => {
-    html.list.overlay.open = true;
-  };
-
-  const closeModal = () => {
-    html.list.overlay.open = false;
+    template.shadowRoot.querySelector('[data-list-active]').open = true;
   };
 
   return {
     activeBook: active,
     updateBookModal,
     open: openModal,
-    close: closeModal,
   };
 };
 
