@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.8.0/cdn/themes/light.css" />
+        <script type="module"
+            src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.8.0/cdn/shoelace-autoloader.js"></script>
+        <script src="script.js" defer type="module"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="tally">
+                <h1>Tally Count</h1>
+                <p class="total" data-tally-amount>0</p>
+                <p class="reset-message" data-reset-message >Counter has been reset!</p>
+                <div class="buttons">
+                    <sl-button variant="success" data-increase-button>Increase</sl-button>
+                    <sl-button variant="neutral" data-reset-button>Reset</sl-button>
+                    <sl-button variant="danger" data-decrease-button>Decrease</sl-button>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
