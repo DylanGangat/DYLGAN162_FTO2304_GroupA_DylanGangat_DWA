@@ -4,10 +4,10 @@
 const initialState = { count: 0 };
 
 // The reducer function handles three types of actions: ADD, SUBTRACT, and RESET.
-export function reducer(state = initialState, action) {
-  const {count} = state;
+const reducer = (action, state = initialState) => {
+  const { count } = state;
 
-// Depending on the action type, it calculates the new state.
+  // Depending on the action type, it calculates the new state.
   switch (action.type) {
     case 'ADD':
       return { ...state, count: count + 1 };
@@ -18,6 +18,6 @@ export function reducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};
 
-
+export default reducer;

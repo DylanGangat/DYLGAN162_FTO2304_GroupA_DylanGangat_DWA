@@ -1,4 +1,4 @@
-import { store } from './redux/store.js';
+import store from './redux/store.js';
 import { ADD, SUBTRACT, RESET } from './redux/actions.js';
 
 // Scenario 1: Initial state
