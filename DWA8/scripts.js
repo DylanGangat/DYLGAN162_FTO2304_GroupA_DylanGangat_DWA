@@ -1,6 +1,6 @@
 import { books, BOOKS_PER_PAGE } from './data.js';
 import { html, createBookElement, updateColorThemeMode } from './view.js';
-import getClickedBookAndDisplayModal from './modules/bookPreview.js';
+import bookPreviewFactory from './modules/bookPreview.js';
 
 let page = 1;
 let matches = books;
@@ -148,8 +148,7 @@ html.list.button.addEventListener('click', () => {
 });
 
 html.list.items.addEventListener('click', event => {
-  createModal = getClickedBookAndDisplayModal(event);
-  createModal.updateBookModal();
+  createModal = bookPreviewFactory(event);
   createModal.open();
 });
 
